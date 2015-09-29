@@ -80,7 +80,8 @@ class  ViewSinglePage(webapp2.RequestHandler):
             count.put()
 
             url=urllib.urlencode({'showmore': stream.name+"=="+users.get_current_user().nickname()})
-            self.response.write('<form action="%s" ,method="post"><input type="submit" value="View More to Subscribe"></form>' %url)
+            self.response.write('<form action="%s" ,method="post"><input type="submit" value="More Pictures"></form>' %url)
+            self.response.write('<form action="subscribe" method="post"><input type="submit" value="Subscribe"></form>')
 
 
 class Image(webapp2.RequestHandler):
@@ -126,7 +127,11 @@ class DeletePictures(webapp2.RequestHandler):
 
 class SubscribeStream(webapp2.RequestHandler):
     def post(self):
-        original_url=self.request.headers['Referer']
+        original_url0 = self.request.headers['Referer']
+        original_url = original_url0
+        if "%3D" not in original_url:
+            original_url += '%3D%3D'
+            original_url += users.get_current_user().nickname()
 
         stream_name=re.findall('=(.*)%3D%3D',original_url)
         if(len(stream_name)<1):
@@ -153,7 +158,7 @@ class SubscribeStream(webapp2.RequestHandler):
             stream.subscribers.append(users.get_current_user().nickname())
         stream.put()
 
-        self.redirect(original_url)
+        self.redirect(original_url0)
 
 
 class ShowPictures(webapp2.RequestHandler):
