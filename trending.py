@@ -99,7 +99,7 @@ class Update(webapp2.RequestHandler):
         if frequency=="no":
             gl.limit=0
         if frequency=="5m":
-            gl.limit=1
+            gl.limit=1  # in times of increasement of cron
         if frequency=="1h":
             gl.limit=12
         if frequency=="1d":
