@@ -73,6 +73,8 @@ class  ViewSinglePage(webapp2.RequestHandler):
             self.response.out.write("""Upload File: <input type="file"  name="file" ><br> <input type="submit" name="submit" value="Submit"> </form>""")
         else:
             #Change! Added#
+            stream = Stream.query(Stream.name==stream_name).fetch()[0]
+            count=CountViews.query(CountViews.name==stream.name,ancestor=ndb.Key('User',stream.author_name)).fetch()[0]
             url=urllib.urlencode({'showmore': stream.name+"=="+users.get_current_user().nickname()})
             self.response.write('<form action="%s" ,method="post"><input type="submit" value="View More to Subscribe"></form>' %url)
 
@@ -159,8 +161,6 @@ class ShowPictures(webapp2.RequestHandler):
         self.response.write('<h2 >%s</h2>' %stream_name)
         index=0
         #Change!# stream=Stream.query(Stream.name==stream_name, Stream.author_name==user_name).fetch()[0]
-        stream = Stream.query(Stream.name==stream_name).fetch()[0]
-        count=CountViews.query(CountViews.name==stream.name,ancestor=ndb.Key('User',stream.author_name)).fetch()[0]
 
         count.numbers=count.numbers+1
         count.totalviews=count.totalviews+1
