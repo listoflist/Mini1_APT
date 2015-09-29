@@ -72,7 +72,10 @@ class CreateStream(webapp2.RequestHandler):
         emailSender = users.get_current_user().email()
 
 
-        streams=Stream.query(Stream.name==stream_name, Stream.author==users.get_current_user()).fetch()
+        #Change! # streams=Stream.query(Stream.name==stream_name, Stream.author==users.get_current_user()).fetch()
+
+        streams=Stream.query(Stream.name==stream_name).fetch()
+
         if (len(streams)<1):
             stream=Stream()
             count=CountViews(parent=ndb.Key('User',users.get_current_user().nickname()))
