@@ -117,7 +117,7 @@ class Task(webapp2.RequestHandler):
             gl=gl[0]
             gl.count=gl.count+1
             self.response.write(gl.count) # test
-            if(gl.count>=gl.limit): #Change!# instead of ==
+            if(gl.count==gl.limit): #Change!# instead of ==
                 gl.count=0
                 if users.get_current_user():
                     default_context = "Stream Trending Updated\n\n"
