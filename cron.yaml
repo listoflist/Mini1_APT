@@ -1,6 +1,6 @@
 cron:
 - url: /task
-  schedule: every 5 minutes
+  schedule: every 1 minutes #for test only
 
 - description: cleanviews
   url: /clean
