@@ -90,7 +90,7 @@ class Update(webapp2.RequestHandler):
         frequency=self.request.get("frequency")
         gl=Global.query(Global.name=="global").fetch()
         #self.response.write(gl)
-        if len(gl)<1:
+        if len(gl)<=0:
             gl=Global(name="global",count=0,limit=0)
         else:
             gl=gl[0]
