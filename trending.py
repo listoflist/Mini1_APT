@@ -51,7 +51,7 @@ class Trending(webapp2.RequestHandler):
         if(len(gl)>0):
             gl=gl[0]
         #streams=Stream.query(Stream.author==users.get_current_user()).order(-Stream.views).fetch(3)
-        counts=CountViews.query(ancestor=ndb.Key('User',users.get_current_user().nickname())).order(-CountViews.numbers).fetch(3)
+        counts=CountViews.query().order(-CountViews.numbers).fetch(3)
 
         self.response.write('<table style = "width:70%">')
         for count in counts:
