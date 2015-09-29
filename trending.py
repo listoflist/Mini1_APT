@@ -89,17 +89,17 @@ class Update(webapp2.RequestHandler):
         original_url=self.request.headers['Referer']
         frequency=self.request.get("frequency")
         gl=Global.query(Global.name=="global").fetch()
-        self.response.write(gl)
+        #self.response.write(gl)
         if len(gl)<1:
             gl=Global(name="global",count=0,limit=0)
         else:
             gl=gl[0]
 
-        #self.response.write(frequency)
+        self.response.write(frequency)
         if frequency=="no":
             gl.limit=0
         if frequency=="5m":
-            gl.limit=1  # in times of increasement of cron
+            gl.limit=1  # in times of increasement of cron schedule
         if frequency=="1h":
             gl.limit=12
         if frequency=="1d":
@@ -112,9 +112,11 @@ class Task(webapp2.RequestHandler):
     def get(self):
         #if users.get_current_user():
         gl=Global.query(Global.name=="global").fetch()
+        self.response.write(gl) # test
         if(len(gl)>0):
             gl=gl[0]
             gl.count=gl.count+1
+            self.response.write(gl.count) # test
             if(gl.count>=gl.limit): #Change!# instead of ==
                 gl.count=0
                 if users.get_current_user():
