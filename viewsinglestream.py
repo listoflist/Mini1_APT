@@ -168,6 +168,8 @@ class ShowPictures(webapp2.RequestHandler):
 
         pictures=db.GqlQuery("SELECT * FROM Picture " +"WHERE ANCESTOR IS :1 "+"ORDER BY uploaddate DESC",db.Key.from_path('Stream',stream_name))
 
+        stream = Stream.query(Stream.name==stream_name).fetch()[0]
+
         if(users.get_current_user() and stream.author==users.get_current_user()):
             self.response.write('<form action="delpic" method="post"><table border="1" style="width:100%">')
             for picture in pictures:
