@@ -124,8 +124,8 @@ class Task(webapp2.RequestHandler):
                 emailSubject = "Stream Trending"
                 emailSender = "info@mini1-test1.appspotmail.com"
                 mail.send_mail(sender = emailSender, to = emailSender, subject = emailSubject, body = default_context)
-                mail.send_mail(sender = emailSender, to = "xkdai@utexas.edu", subject = emailSubject, body = default_context)
-                #mail.send_mail(sender = emailSender, to = "ragha@utexas.edu", subject = emailSubject, body = default_context)
+                mail.send_mail(sender = emailSender, to = "nima.dini@utexas.edu", subject = emailSubject, body = default_context)
+                mail.send_mail(sender = emailSender, to = "kevzsolo@gmail.com", subject = emailSubject, body = default_context)
                 gl.put()
 
 class Clean(webapp2.RequestHandler):
