@@ -112,21 +112,21 @@ class Task(webapp2.RequestHandler):
     def get(self):
         #if users.get_current_user():
         gl=Global.query(Global.name=="global").fetch()
-        self.response.write(gl) # test
+        #self.response.write(gl) # test
         if(len(gl)>0):
             gl=gl[0]
             gl.count=gl.count+1
-            self.response.write(gl.count) # test
+            #self.response.write(gl.count) # test
             if(gl.count==gl.limit): #Change!# instead of ==
                 gl.count=0
-                if users.get_current_user():
-                    default_context = "Stream Trending Updated\n\n"
-                    emailSubject = "UserID: " + users.get_current_user().nickname()
-                    emailSender = users.get_current_user().email()
-                    mail.send_mail(sender = emailSender, to = emailSender, subject = emailSubject, body = default_context)
-                    mail.send_mail(sender = emailSender, to = "xkdai@utexas.edu", subject = emailSubject, body = default_context)
-                    #mail.send_mail(sender = emailSender, to = "ragha@utexas.edu", subject = emailSubject, body = default_context)
-                    gl.put()
+                # if users.get_current_user():
+                default_context = "Stream Trending Updated\n\n"
+                emailSubject = "Stream Trending"
+                emailSender = "info@mini1-test1.appspotmail.com"
+                mail.send_mail(sender = emailSender, to = emailSender, subject = emailSubject, body = default_context)
+                mail.send_mail(sender = emailSender, to = "xkdai@utexas.edu", subject = emailSubject, body = default_context)
+                #mail.send_mail(sender = emailSender, to = "ragha@utexas.edu", subject = emailSubject, body = default_context)
+                gl.put()
 
 class Clean(webapp2.RequestHandler):
     def get(self):
