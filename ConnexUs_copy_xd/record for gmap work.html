@@ -1,0 +1,21 @@
+var pics = [{{ ', '.join(pictures) }}];
+
+img?img_id=pic0key
+
+SRC="img?img_id=pic0key"
+
+ag1zfm1pbmkyLXRlc3QxciULEgZTdHJlYW0iBXRlc3QxDAsSB1BpY3R1cmUYgICAgIDXjAoM
+ag1zfm1pbmkyLXRlc3QxciULEgZTdHJlYW0iBXRlc3QxDAsSB1BpY3R1cmUYgICAgIDXjAoM
+
+
+work:
+                var pic0key = "{{ pictures[0].key() }}";
+                console.log(pic0key);
+                for ( var i = 0; i < 10; i++ ) {
+                    $(this).gmap('addMarker', { 'position': new google.maps.LatLng(southWest.lat() + latSpan * Math.random(), southWest.lng() + lngSpan * Math.random()) } ).click(function() {
+                        $('#map_canvas').gmap('openInfoWindow', { content : '<IMG height="100" width="100" src="img?img_id={{ pictures[4].key() }}">' }, this);
+                    });
+                }
+
+
+{ 'position': new google.maps.LatLng(southWest.lat() + latSpan * Math.random(), southWest.lng() + lngSpan * Math.random()) }

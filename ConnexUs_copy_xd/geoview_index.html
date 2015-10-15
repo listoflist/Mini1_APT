@@ -5,6 +5,8 @@
     <article class="grid_16">
         <div class="item rounded dark">
             <div id="map_canvas" class="map"></div>
+            <br />
+            <div id="slider"></div>
         </div>
     </article>
 </div>
@@ -17,6 +19,11 @@
 <script type="text/javascript" src="js/demo.js"></script>
 <script type="text/javascript" src="js/markerclustererplus-2.0.6/markerclusterer.min.js"></script>
 <script type="text/javascript" src="ui/jquery.ui.map.js"></script>
+
+<!-- <script type="text/javascript" src="js/jquery.js"></script> -->
+<script type="text/javascript" src="js/jquery-ui.custom.js"></script>
+<script type="text/javascript" src="js/jQDateRangeSlider-min.js"></script>
+
 <script type="text/javascript">
     $(function() {
         demo.add(function() {
@@ -34,9 +41,54 @@
                 {% endfor%}
 
                 $(this).gmap('set', 'MarkerClusterer', new MarkerClusterer(map, $(this).gmap('get', 'markers')));
+
             });
         }).load();
     });
+
+
+    $(function() {
+        var today = new Date();
+        var todayLastYear = new Date();
+        todayLastYear.setFullYear(todayLastYear.getFullYear() - 1);
+        $("#slider").dateRangeSlider({
+            bounds: {min: todayLastYear, max: today},
+            defaultValues: {min: todayLastYear, max: today}
+        });
+
+        var from = todayLastYear;
+        var to = today;
+        $("#slider").on("valuesChanging", function(e, data){
+            from = data.values.min;
+            to = data.values.max;
+
+            var tmp=$('#map_canvas');
+
+            tmp.gmap('clear','markers');
+            tmp.gmap('get','MarkerClusterer').clearMarkers();
+            tmp.gmap('closeInfoWindow');
+            var map=tmp.gmap('get','map');
+            var bounds = map.getBounds();
+            var southWest = bounds.getSouthWest();
+            var northEast = bounds.getNorthEast();
+            var lngSpan = northEast.lng() - southWest.lng();
+            var latSpan = northEast.lat() - southWest.lat();
+
+            {% for info in infos%}
+                var t = "{{ info[2] }}".split(/[- :]/); // Split timestamp into [ Y, M, D, h, m, s ]
+                var info_date = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);  // Apply each element to the Date function
+                if (from <= info_date && info_date <= to) {
+                    tmp.gmap('addMarker', { 'position': new google.maps.LatLng(southWest.lat() + latSpan * Math.random(), southWest.lng() + lngSpan * Math.random()) }).click(function() {
+                        tmp.gmap('openInfoWindow', { content : '<IMG height="100" width="100" src="img?img_id={{ info[0] }}">' }, this);
+                    });
+                }
+            {% endfor%}
+
+            tmp.gmap('set', 'MarkerClusterer', new MarkerClusterer(map, tmp.gmap('get', 'markers')));
+
+        });
+    });
+
 </script>
 
 
